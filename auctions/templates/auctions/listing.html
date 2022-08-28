@@ -1,0 +1,135 @@
+{% extends "auctions/layout.html" %}
+{% load static %} 
+{% load bootstrap4 %}
+{% block body %}
+<h2>Active Listing</h2>
+
+
+
+
+<hr>
+
+
+<h2 style="text-align: center;">Listing: {{listing.listing_title}}</h2>
+{% if key == 1 %}
+
+   
+    
+    {% buttons %}
+        <a href="{% url 'remove' listing.id %}"><button name="watchlistbutton" type="submit" class="btn btn-secondary">Remove</button></a>
+    {% endbuttons %}
+    <br>
+    <br>
+
+{% else %}
+<form action="{% url 'listing' listing.id %}" method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form watchlistform %}
+    {% buttons %}
+        <button name="watchlistbutton" type="submit" class="btn btn-dark">Add to watchlist</button>
+    {% endbuttons %}
+    <br>
+    <br>
+</form>
+{% endif %}
+
+
+
+
+
+
+</li>
+
+
+
+
+<img style="display: flex;" width=300px; height:300px; src="{{listing.imageURL}}" alt="My image">
+<strong style="text-align: center;"><p>Price: ${{listing.listing_price}}</p><strong>
+<form action="{% url 'listing' listing.id %}" method="post" class="form">
+    {% csrf_token %}
+   {% for field in form %}
+    {% bootstrap_field field %}
+   {% endfor %}
+    {% buttons %}
+        <button  name="bid" type="submit" class="btn btn-primary">Submit</button>
+    {% endbuttons %}
+</form>
+
+
+<p>{{no_of_bids}} bids made so far</p>
+{% if flag == True %}
+  <p>${{highestbid}} is the highest bid until now!</p>
+{% else %}
+ 
+{% endif %}
+
+<hr>
+<br>
+<h3>Details:</h3>
+<strong style="text-align: center;"><p>Listed by: {{listing.listing_owner}}</p><strong>
+<strong style="text-align: center;"><p>Category: {{listing.listing_category}}</p><strong>
+<br>
+<br>
+<hr>
+
+<h2 style="text-decoration:underline;"> Comment Section</h2>
+{%if len == 0 %}
+
+  <p>Post a Comment, No Comments</p>
+
+{%  endif %}
+
+{% for comment  in comments %}
+   
+     <p> 
+       {{comment}}
+    
+     </p>
+  
+  
+{% endfor %}
+
+<br>
+<br>
+
+
+<form action="{% url 'listing' listing.id %}" method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form commentForm %}
+    {% buttons %}
+        <button name="comment" type="submit" class="btn btn-primary">Submit</button>
+    {% endbuttons %}
+</form>
+   
+
+
+  
+
+{% if j %}
+
+   
+    
+    {% buttons %}
+        <a href="{% url 'delete' listing.id highestbidder %}"><button name="delete" type="submit" class="btn btn-dark">Close Listing</button></a>
+    {% endbuttons %}
+
+
+{% endif %}
+
+
+     
+     
+
+   
+     
+
+     
+     
+    
+
+    
+   
+   
+   
+
+{% endblock %}
