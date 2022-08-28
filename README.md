@@ -1,6 +1,5 @@
 # ebay_like_app
 
-## Video:-[Watch it, working](https://youtu.be/ueoYW6tCAE0)
 
 ## Installation
 In order to run this project, you must have python3 installed on your system
